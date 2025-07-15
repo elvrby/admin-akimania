@@ -14,6 +14,7 @@ const AdminPage: React.FC = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
   const [currentTime, setCurrentTime] = useState(new Date());
+  const [isDesktop, setIsDesktop] = useState<boolean>(true);
 
   const [totalUsers, setTotalUsers] = useState(0);
   const [totalWarranties, setTotalWarranties] = useState(0);
@@ -53,8 +54,22 @@ const AdminPage: React.FC = () => {
   }, []);
 
   const handleSidebarToggle = (isOpen: boolean) => {
-    setIsSidebarOpen(isOpen);
+    if (isDesktop) {
+      setIsSidebarOpen(isOpen);
+    }
   };
+
+  useEffect(() => {
+    const handleResize = () => {
+      const isWide = window.innerWidth >= 1024; // lg: ≥1024px
+      setIsDesktop(isWide);
+      setIsSidebarOpen(isWide); // otomatis buka sidebar hanya di desktop
+    };
+
+    handleResize(); // initial check
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const getGreeting = () => {
     const hour = currentTime.getHours();
@@ -102,13 +117,23 @@ const AdminPage: React.FC = () => {
       </div>
     );
   }
+  if (!loading && (!user || !isAdmin)) {
+    return (
+      <div className="flex justify-center items-center h-screen bg-white text-slate-800">
+        <div className="text-center">
+          <h1 className="text-4xl font-bold text-red-500 mb-4">404 - Not Found</h1>
+          <p className="text-lg text-slate-600">You do not have permission to access this page.</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col h-screen bg-slate-50">
       <div className="flex flex-1">
         <AdminSidebar onToggle={handleSidebarToggle} />
 
-        <main className={`flex-1 transition-all duration-300 ${isSidebarOpen ? "ml-80" : "ml-16"}`}>
+        <main className={`flex-1 transition-all duration-300 ${isSidebarOpen ? "lg:ml-80" : "lg:ml-16"}`}>
           <div className="min-h-full bg-gradient-to-br from-slate-50 via-white to-indigo-50 relative overflow-hidden">
             {/* Enhanced Decorative Elements */}
             <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-br from-violet-400/20 via-purple-400/20 to-blue-400/20 rounded-full blur-3xl animate-pulse"></div>
@@ -158,10 +183,10 @@ const AdminPage: React.FC = () => {
                     </div>
 
                     <div className="flex-1 text-center lg:text-left">
-                      <h2 className="text-4xl font-bold bg-gradient-to-r from-slate-900 via-purple-800 to-blue-800 bg-clip-text text-transparent mb-3">
+                      <h2 className="lg:text-4xl text-2xl font-bold bg-gradient-to-r from-slate-900 via-purple-800 to-blue-800 bg-clip-text text-transparent mb-3">
                         {getGreeting()}, {user?.displayName || "Admin"}! 👋
                       </h2>
-                      <p className="text-slate-600 text-xl mb-6">Ready to manage your Akimania platform today?</p>
+                      <p className="text-slate-600 lg:text-xl text-lg mb-6">Ready to manage your Akimania platform today?</p>
                       <div className="flex flex-col sm:flex-row gap-6 text-sm">
                         <div className="flex items-center gap-3 text-slate-600 bg-white/60 backdrop-blur-sm rounded-full px-4 py-2 border border-white/40">
                           <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full flex items-center justify-center">

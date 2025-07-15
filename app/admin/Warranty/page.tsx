@@ -1,7 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { onAuthStateChanged } from "@/libs/firebase/auth";
+import { onAuthStateChanged, getUserRoles } from "@/libs/firebase/auth";
 import { collection, getDocs, deleteDoc, doc, query, where } from "firebase/firestore";
+import { User } from "firebase/auth";
 import { firebaseFirestore } from "@/libs/firebase/config";
 import AdminSidebar from "../../../components/admin/adminSidebar";
 
@@ -14,21 +15,20 @@ interface WarrantyData {
 
 const WarrantyPage: React.FC = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const [user, setUser] = useState<{ username: string; uid: string } | null>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [warranties, setWarranties] = useState<WarrantyData[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [showDeleteModal, setShowDeleteModal] = useState<string | null>(null);
 
+  // Ambil data auth dan statistik
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged((authUser) => {
+    const unsubscribe = onAuthStateChanged(async (authUser) => {
+      setUser(authUser);
       if (authUser) {
-        setUser({
-          username: authUser.displayName || "No username",
-          uid: authUser.uid,
-        });
-      } else {
-        setUser(null);
+        const roles = await getUserRoles(authUser.uid);
+        setIsAdmin(roles === "admin");
       }
       setIsLoading(false);
     });
@@ -116,6 +116,16 @@ const WarrantyPage: React.FC = () => {
       </div>
     );
   }
+  if (!isLoading && (!user || !isAdmin)) {
+    return (
+      <div className="flex justify-center items-center h-screen bg-white text-slate-800">
+        <div className="text-center">
+          <h1 className="text-4xl font-bold text-red-500 mb-4">404 - Not Found</h1>
+          <p className="text-lg text-slate-600">You do not have permission to access this page.</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col h-screen bg-slate-50">
@@ -174,7 +184,7 @@ const WarrantyPage: React.FC = () => {
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
                       placeholder="Cari berdasarkan kode garansi..."
-                      className="pl-10 pr-4 py-3 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full transition-all duration-200"
+                      className="pl-10 pr-4 py-3 text-black border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full transition-all duration-200"
                       onKeyDown={(e) => e.key === "Enter" && handleSearch()}
                     />
                   </div>

@@ -67,7 +67,7 @@ const AdminSidebar: React.FC<{ onToggle: (isOpen: boolean) => void }> = ({ onTog
     <>
       {/* Sidebar */}
       <div
-        className={`fixed top-16 left-0 h-[calc(100vh-64px)] bg-gradient-to-b from-slate-900 to-slate-800 transition-all duration-300 ease-in-out ${
+        className={`fixed top-16 left-0 h-[calc(100vh-64px)] bg-gradient-to-b from-slate-900 hidden lg:block to-slate-800 transition-all duration-300 ease-in-out ${
           isOpen ? "w-80" : "w-16"
         } overflow-hidden z-30 border-r border-slate-700/50 shadow-2xl`}
       >
@@ -81,21 +81,23 @@ const AdminSidebar: React.FC<{ onToggle: (isOpen: boolean) => void }> = ({ onTog
             </button>
           </div>
 
-          {/* Header */}
-          <div className={`px-6 pb-6 transition-all duration-300 ${isOpen ? "opacity-100" : "opacity-0"}`}>
-            <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center shadow-lg">
-                <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0..." />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
-              </div>
-              <div>
-                <h2 className="text-white text-xl font-bold">Admin Panel</h2>
-                <p className="text-slate-400 text-sm">Management System</p>
+          {/* Header - Hidden when collapsed */}
+          {isOpen && (
+            <div className="px-6 pb-6 transition-all duration-300">
+              <div className="flex items-center space-x-3">
+                <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center shadow-lg">
+                  <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0..." />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                </div>
+                <div>
+                  <h2 className="text-white text-xl font-bold">Admin Panel</h2>
+                  <p className="text-slate-400 text-sm">Management System</p>
+                </div>
               </div>
             </div>
-          </div>
+          )}
 
           {/* Navigation Menu */}
           <nav className="flex-1 px-4">
@@ -108,10 +110,8 @@ const AdminSidebar: React.FC<{ onToggle: (isOpen: boolean) => void }> = ({ onTog
                         isOpen ? "px-4 py-3" : "px-3 py-3 justify-center"
                       } rounded-xl transition-all duration-200 hover:bg-slate-700/50 hover:transform hover:scale-105 cursor-pointer border border-transparent hover:border-slate-600/30 hover:shadow-lg`}
                     >
-                      <div className="text-slate-300 group-hover:text-white transition-colors duration-200">{item.icon}</div>
-                      <span className={`ml-3 text-slate-300 group-hover:text-white font-medium transition-all duration-300 ${isOpen ? "opacity-100 translate-x-0" : "opacity-0 translate-x-4"}`}>
-                        {item.label}
-                      </span>
+                      <div className="text-slate-300 group-hover:text-white transition-colors duration-200 flex-shrink-0">{item.icon}</div>
+                      {isOpen && <span className="ml-3 text-slate-300 group-hover:text-white font-medium transition-all duration-300 whitespace-nowrap">{item.label}</span>}
                     </div>
                   </Link>
                 </li>
@@ -123,12 +123,12 @@ const AdminSidebar: React.FC<{ onToggle: (isOpen: boolean) => void }> = ({ onTog
           <div className="p-4 border-t border-slate-700/50">
             <button
               onClick={() => setShowLogoutConfirm(true)}
-              className="w-full flex items-center px-4 py-3 rounded-xl text-red-400 hover:text-white hover:bg-red-500/30 transition-all justify-center"
+              className={`w-full flex items-center px-4 py-3 rounded-xl text-red-400 hover:text-white hover:bg-red-500/30 transition-all ${isOpen ? "justify-start" : "justify-center"}`}
             >
-              <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H7a2 2 0 01-2-2V7a2 2 0 012-2h4a2 2 0 012 2v1" />
               </svg>
-              {isOpen && <span className="font-medium">Logout</span>}
+              {isOpen && <span className="ml-2 font-medium whitespace-nowrap">Logout</span>}
             </button>
           </div>
         </div>
