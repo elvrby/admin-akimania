@@ -2,14 +2,17 @@
 import AdminSidebar from "../../../components/admin/adminSidebar";
 import React, { useEffect, useState } from "react";
 import { onAuthStateChanged, getUserRoles } from "@/libs/firebase/auth";
+import { doc, onSnapshot } from "firebase/firestore";
+import { db } from "@/libs/firebase/config";
 import SendWarranty from "@/components/GenerateWarranty";
 
 const AddWarrantyPage: React.FC = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const [user, setUser] = useState<{ username: string; uid: string } | null>(null);
+  const [user, setUser] = useState<{ username: string; uid: string; firebaseUid: string; publicUid: string } | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [warrantyDuration, setWarrantyDuration] = useState<number>(2);
   const [isLoading, setIsLoading] = useState(true);
+  const [userUid, setUserUid] = useState<string | null>(null);
 
   const warrantyOptions = [
     { value: 1, label: "1 Bulan" },
@@ -20,24 +23,48 @@ const AddWarrantyPage: React.FC = () => {
     { value: 36, label: "3 Tahun" },
   ];
 
+  // Auth state - hanya ambil UID, tunggu Firestore untuk detail user
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(async (authUser) => {
       if (authUser) {
-        const roles = await getUserRoles(authUser.uid);
-        setIsAdmin(roles === "admin");
-        setUser({
-          username: authUser.displayName || "No username",
-          uid: authUser.uid,
-        });
+        setUserUid(authUser.uid);
       } else {
         setUser(null);
         setIsAdmin(false);
+        setIsLoading(false);
       }
-      setIsLoading(false);
     });
 
     return () => unsubscribe();
   }, []);
+
+  // Ambil data dari Firestore
+  useEffect(() => {
+    if (!userUid) return;
+
+    const unsub = onSnapshot(doc(db, "users", userUid), async (docSnap) => {
+      if (docSnap.exists()) {
+        const userData = docSnap.data();
+        const roles = userData.roles || "";
+
+        setUser({
+          username: userData.username || "No username",
+          uid: docSnap.id,
+          firebaseUid: docSnap.id,
+          publicUid: userData.uid || "",
+        });
+
+        setIsAdmin(roles === "admin" || (Array.isArray(roles) && roles.includes("admin")));
+      } else {
+        setUser(null);
+        setIsAdmin(false);
+      }
+
+      setIsLoading(false);
+    });
+
+    return () => unsub();
+  }, [userUid]);
 
   const handleSidebarToggle = (isOpen: boolean) => {
     setIsSidebarOpen(isOpen);
@@ -47,7 +74,7 @@ const AddWarrantyPage: React.FC = () => {
     setWarrantyDuration(duration);
   };
 
-  if (isLoading) {
+  if (isLoading || !user) {
     return (
       <div className="flex items-center justify-center h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
         <div className="text-center">
@@ -58,7 +85,7 @@ const AddWarrantyPage: React.FC = () => {
     );
   }
 
-  if (!user || !isAdmin) {
+  if (!isAdmin) {
     return (
       <div className="flex justify-center items-center h-screen bg-white text-slate-800">
         <div className="text-center">
@@ -104,7 +131,7 @@ const AddWarrantyPage: React.FC = () => {
                     </div>
                     <div>
                       <h3 className="text-lg font-semibold text-gray-900">Selamat datang, {user.username}!</h3>
-                      <p className="text-gray-500 text-sm">ID: {user.uid}</p>
+                      <p className="text-gray-500 text-sm">ID: {user.publicUid}</p>
                     </div>
                   </div>
                 </div>

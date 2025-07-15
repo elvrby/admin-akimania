@@ -211,7 +211,7 @@ export function Header({ session }: { session: string | null }) {
           <div className="md:hidden bg-slate-800 border-t border-slate-700/50">
             <div className="px-4 py-3 space-y-2">
               {/* Navigation Links */}
-              <Link href="/home" className="block px-3 py-2 text-slate-300 hover:text-white hover:bg-slate-700/50 rounded-lg transition-colors duration-200">
+              <Link href="/" className="block px-3 py-2 text-slate-300 hover:text-white hover:bg-slate-700/50 rounded-lg transition-colors duration-200">
                 Home
               </Link>
               <a href="#" className="block px-3 py-2 text-slate-300 hover:text-white hover:bg-slate-700/50 rounded-lg transition-colors duration-200">
@@ -220,6 +220,21 @@ export function Header({ session }: { session: string | null }) {
               <a href="#" className="block px-3 py-2 text-slate-300 hover:text-white hover:bg-slate-700/50 rounded-lg transition-colors duration-200">
                 Terms & Use
               </a>
+
+              {/* Admin Menu Section */}
+              <div className="border-t border-slate-700/50 pt-3 mt-3">
+                <div>
+                  <Link href="/admin/addWarranty" className="block px-3 py-2 text-slate-300 hover:text-white hover:bg-slate-700/50 rounded-lg transition-colors duration-200">
+                    Add Warranty
+                  </Link>
+                  <Link href="/admin/Warranty" className="block px-3 py-2 text-slate-300 hover:text-white hover:bg-slate-700/50 rounded-lg transition-colors duration-200">
+                    Warranty
+                  </Link>
+                  <Link href="/" className="block px-3 py-2 text-slate-300 hover:text-white hover:bg-slate-700/50 rounded-lg transition-colors duration-200">
+                    Trash
+                  </Link>
+                </div>
+              </div>
 
               {/* Profile Section */}
               <div className="border-t border-slate-700/50 pt-3 mt-3">
