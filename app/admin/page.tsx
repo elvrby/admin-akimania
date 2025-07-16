@@ -146,10 +146,10 @@ const AdminPage: React.FC = () => {
               style={{ animationDelay: "2s" }}
             ></div>
 
-            <div className="relative  p-8">
+            <div className="relative  lg:p-8">
               {/* Enhanced Header */}
               <div className="mb-12 flex items-center justify-between">
-                <div>
+                <div className="p-4">
                   <h1 className="text-3xl font-bold bg-gradient-to-r from-slate-900 via-purple-900 to-blue-900 bg-clip-text text-transparent mb-1">Admin Dashboard</h1>
                   <p className="text-slate-600 text-lg font-medium">Welcome to your management center</p>
                 </div>
@@ -160,7 +160,7 @@ const AdminPage: React.FC = () => {
               </div>
 
               {/* Enhanced Welcome Section */}
-              <div className="max-w-6xl mx-auto">
+              <div className="max-w-6xl mx-auto p-4">
                 <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/60 p-10 mb-10 relative overflow-hidden">
                   {/* Card Background Pattern */}
                   <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-blue-500/5"></div>
@@ -215,7 +215,7 @@ const AdminPage: React.FC = () => {
                 </div>
 
                 {/* Enhanced Dashboard Stats */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-10">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-10 p-4">
                   <div className="group bg-white/80 backdrop-blur-xl rounded-3xl p-8 border border-white/60 hover:shadow-2xl hover:shadow-purple-500/10 transition-all duration-300 relative overflow-hidden">
                     <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     <div className="relative z-10">
