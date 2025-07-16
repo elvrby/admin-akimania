@@ -100,14 +100,14 @@ const AddWarrantyPage: React.FC = () => {
     <div className="flex flex-col h-screen bg-gray-50">
       <div className="flex flex-1">
         <AdminSidebar onToggle={handleSidebarToggle} />
-        <main className={`flex-1 transition-all duration-300 ${isSidebarOpen ? "ml-80" : "ml-16"}`}>
+        <main className={`flex-1 transition-all duration-300 ${isSidebarOpen ? "lg:ml-80" : "lg:ml-16"}`}>
           <div className="min-h-full bg-gradient-to-br from-blue-50 via-white to-indigo-50">
-            <div className="p-6 lg:p-8">
+            <div className="p-4 sm:p-6 lg:p-8">
               {/* Header */}
-              <div className="mb-8">
+              <div className="mb-6 sm:mb-8">
                 <div className="flex items-center space-x-3 mb-2">
-                  <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center">
-                    <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 bg-indigo-600 rounded-lg flex items-center justify-center">
+                    <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path
                         strokeLinecap="round"
                         strokeLinejoin="round"
@@ -116,62 +116,62 @@ const AddWarrantyPage: React.FC = () => {
                       />
                     </svg>
                   </div>
-                  <h1 className="text-3xl font-bold text-gray-900">Generator Garansi</h1>
+                  <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Generator Garansi</h1>
                 </div>
-                <p className="text-gray-600 text-lg">Buat dan kelola garansi produk dengan mudah</p>
+                <p className="text-gray-600 text-base sm:text-lg">Buat dan kelola garansi produk dengan mudah</p>
               </div>
 
               {/* Main Section */}
-              <div className="space-y-6">
+              <div className="space-y-4 sm:space-y-6">
                 {/* Info Card */}
-                <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                  <div className="flex items-center space-x-4">
-                    <div className="w-12 h-12 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full flex items-center justify-center">
-                      <span className="text-white font-semibold text-lg">{user.username.charAt(0).toUpperCase()}</span>
+                <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 sm:p-6">
+                  <div className="flex items-center space-x-3 sm:space-x-4">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full flex items-center justify-center flex-shrink-0">
+                      <span className="text-white font-semibold text-base sm:text-lg">{user.username.charAt(0).toUpperCase()}</span>
                     </div>
-                    <div>
-                      <h3 className="text-lg font-semibold text-gray-900">Selamat datang, {user.username}!</h3>
-                      <p className="text-gray-500 text-sm">ID: {user.publicUid}</p>
+                    <div className="min-w-0 flex-1">
+                      <h3 className="text-base sm:text-lg font-semibold text-gray-900 truncate">Selamat datang, {user.username}!</h3>
+                      <p className="text-gray-500 text-sm truncate">ID: {user.publicUid}</p>
                     </div>
                   </div>
                 </div>
 
                 {/* Durasi Garansi */}
-                <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
-                    <svg className="w-5 h-5 mr-2 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 sm:p-6">
+                  <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-3 sm:mb-4 flex items-center">
+                    <svg className="w-4 h-4 sm:w-5 sm:h-5 mr-2 text-indigo-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    Pilih Durasi Garansi
+                    <span className="truncate">Pilih Durasi Garansi</span>
                   </h3>
 
-                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-3">
                     {warrantyOptions.map((option) => (
                       <button
                         key={option.value}
                         onClick={() => handleDurationChange(option.value)}
-                        className={`p-4 rounded-lg border-2 transition-all duration-200 text-center hover:shadow-md ${
+                        className={`p-3 sm:p-4 rounded-lg border-2 transition-all duration-200 text-center hover:shadow-md ${
                           warrantyDuration === option.value ? "border-indigo-600 bg-indigo-50 text-indigo-700" : "border-gray-200 bg-white text-gray-700 hover:border-gray-300"
                         }`}
                       >
-                        <div className="font-semibold text-sm">{option.label}</div>
+                        <div className="font-semibold text-xs sm:text-sm">{option.label}</div>
                         <div className="text-xs text-gray-500 mt-1">{option.value} bulan</div>
                       </button>
                     ))}
                   </div>
 
-                  <div className="mt-4 p-4 bg-indigo-50 rounded-lg border border-indigo-200">
-                    <div className="flex items-center justify-between">
-                      <span className="text-indigo-800 font-medium">Durasi yang dipilih:</span>
-                      <span className="text-indigo-600 font-bold">{warrantyOptions.find((opt) => opt.value === warrantyDuration)?.label}</span>
+                  <div className="mt-3 sm:mt-4 p-3 sm:p-4 bg-indigo-50 rounded-lg border border-indigo-200">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-0">
+                      <span className="text-indigo-800 font-medium text-sm sm:text-base">Durasi yang dipilih:</span>
+                      <span className="text-indigo-600 font-bold text-sm sm:text-base">{warrantyOptions.find((opt) => opt.value === warrantyDuration)?.label}</span>
                     </div>
                   </div>
                 </div>
 
                 {/* Komponen Generate Garansi */}
-                <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
-                    <svg className="w-5 h-5 mr-2 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 sm:p-6">
+                  <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-3 sm:mb-4 flex items-center">
+                    <svg className="w-4 h-4 sm:w-5 sm:h-5 mr-2 text-indigo-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path
                         strokeLinecap="round"
                         strokeLinejoin="round"
@@ -179,7 +179,7 @@ const AddWarrantyPage: React.FC = () => {
                         d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
                       />
                     </svg>
-                    Buat Garansi Baru
+                    <span className="truncate">Buat Garansi Baru</span>
                   </h3>
 
                   <SendWarranty username={user.username} uid={user.uid} warrantyDuration={warrantyDuration} />
