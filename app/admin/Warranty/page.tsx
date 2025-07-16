@@ -133,14 +133,14 @@ const WarrantyPage: React.FC = () => {
         <AdminSidebar onToggle={handleSidebarToggle} />
 
         {/* Main Content */}
-        <main className={`flex-1 transition-all duration-300 ${isSidebarOpen ? "ml-80" : "ml-16"}`}>
+        <main className={`flex-1 transition-all duration-300 ${isSidebarOpen ? "lg:ml-80" : "lg:ml-16"}`}>
           <div className="min-h-full bg-gradient-to-br from-slate-50 via-white to-blue-50">
-            <div className="p-6 lg:p-8">
+            <div className="p-4 sm:p-6 lg:p-8">
               {/* Header */}
-              <div className="mb-8">
-                <div className="flex items-center space-x-4 mb-3">
-                  <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg">
-                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="mb-6 sm:mb-8">
+                <div className="flex items-center space-x-3 sm:space-x-4 mb-3">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg">
+                    <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path
                         strokeLinecap="round"
                         strokeLinejoin="round"
@@ -150,11 +150,11 @@ const WarrantyPage: React.FC = () => {
                     </svg>
                   </div>
                   <div>
-                    <h1 className="text-3xl font-bold text-slate-900">Warranty Management</h1>
-                    <p className="text-slate-600 text-lg">Kelola dan pantau semua garansi produk</p>
+                    <h1 className="text-2xl sm:text-3xl font-bold text-slate-900">Warranty Management</h1>
+                    <p className="text-slate-600 text-base sm:text-lg">Kelola dan pantau semua garansi produk</p>
                   </div>
                 </div>
-                <div className="flex items-center space-x-4 text-sm text-slate-500">
+                <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-xs sm:text-sm text-slate-500">
                   <div className="flex items-center space-x-1">
                     <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                     <span>Active: {warranties.filter((w) => !isExpired(w.expiration)).length}</span>
@@ -171,8 +171,8 @@ const WarrantyPage: React.FC = () => {
               </div>
 
               {/* Search and Filters */}
-              <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-6">
-                <div className="flex flex-col sm:flex-row gap-4">
+              <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 sm:p-6 mb-4 sm:mb-6">
+                <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
                   <div className="relative flex-1">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                       <svg className="h-5 w-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -184,22 +184,25 @@ const WarrantyPage: React.FC = () => {
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
                       placeholder="Cari berdasarkan kode garansi..."
-                      className="pl-10 pr-4 py-3 text-black border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full transition-all duration-200"
+                      className="pl-10 pr-4 py-2.5 sm:py-3 text-black border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full transition-all duration-200"
                       onKeyDown={(e) => e.key === "Enter" && handleSearch()}
                     />
                   </div>
                   <div className="flex gap-2">
                     <button
                       onClick={handleSearch}
-                      className="px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all duration-200 flex items-center space-x-2 shadow-md hover:shadow-lg"
+                      className="px-4 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all duration-200 flex items-center space-x-2 shadow-md hover:shadow-lg text-sm sm:text-base"
                     >
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                       </svg>
-                      <span>Search</span>
+                      <span className="hidden sm:inline">Search</span>
                     </button>
                     {searchTerm && (
-                      <button onClick={handleClearSearch} className="px-4 py-3 bg-slate-100 text-slate-600 rounded-xl hover:bg-slate-200 transition-all duration-200 flex items-center">
+                      <button
+                        onClick={handleClearSearch}
+                        className="px-3 sm:px-4 py-2.5 sm:py-3 bg-slate-100 text-slate-600 rounded-xl hover:bg-slate-200 transition-all duration-200 flex items-center"
+                      >
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                         </svg>
@@ -209,8 +212,8 @@ const WarrantyPage: React.FC = () => {
                 </div>
               </div>
 
-              {/* Warranty Table */}
-              <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+              {/* Warranty Table - Desktop */}
+              <div className="hidden md:block bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
                 <div className="overflow-x-auto">
                   <table className="min-w-full divide-y divide-slate-200">
                     <thead className="bg-slate-50">
@@ -278,6 +281,60 @@ const WarrantyPage: React.FC = () => {
                   </table>
                 </div>
               </div>
+
+              {/* Warranty Cards - Mobile */}
+              <div className="md:hidden space-y-4">
+                {warranties.length > 0 ? (
+                  warranties.map((warranty) => (
+                    <div key={warranty.id} className="bg-white rounded-2xl shadow-sm border border-slate-200 p-4">
+                      <div className="flex items-start justify-between mb-3">
+                        <div>
+                          <h3 className="font-medium text-slate-900 text-sm">{warranty.warrantyCode}</h3>
+                          <p className="text-xs text-slate-500 mt-1">Warranty Code</p>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          {getStatusBadge(warranty.expiration)}
+                          <button onClick={() => setShowDeleteModal(warranty.id)} className="p-1.5 text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg transition-all duration-200">
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                              />
+                            </svg>
+                          </button>
+                        </div>
+                      </div>
+                      <div className="grid grid-cols-2 gap-4">
+                        <div>
+                          <p className="text-xs text-slate-500">Purchase Date</p>
+                          <p className="text-sm font-medium text-slate-900">{warranty.purchaseDate}</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-500">Expiration Date</p>
+                          <p className="text-sm font-medium text-slate-900">{warranty.expiration}</p>
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-8 text-center">
+                    <svg className="w-12 h-12 text-slate-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                      />
+                    </svg>
+                    <div className="text-slate-500">
+                      <p className="text-lg font-medium">No warranty data found</p>
+                      <p className="text-sm">Try adjusting your search or add new warranty</p>
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </main>
@@ -285,8 +342,8 @@ const WarrantyPage: React.FC = () => {
 
       {/* Delete Confirmation Modal */}
       {showDeleteModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-2xl p-6 max-w-md w-full mx-4 shadow-2xl">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl p-6 max-w-md w-full shadow-2xl">
             <div className="flex items-center space-x-3 mb-4">
               <div className="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center">
                 <svg className="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -301,7 +358,7 @@ const WarrantyPage: React.FC = () => {
               <h3 className="text-lg font-semibold text-slate-900">Confirm Delete</h3>
             </div>
             <p className="text-slate-600 mb-6">Are you sure you want to delete this warranty? This action cannot be undone.</p>
-            <div className="flex space-x-3">
+            <div className="flex flex-col sm:flex-row gap-3 sm:space-x-3 sm:gap-0">
               <button onClick={() => setShowDeleteModal(null)} className="flex-1 px-4 py-2 bg-slate-100 text-slate-600 rounded-xl hover:bg-slate-200 transition-colors duration-200">
                 Cancel
               </button>
