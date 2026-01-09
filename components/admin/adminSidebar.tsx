@@ -28,7 +28,7 @@ const AdminSidebar: React.FC<{ onToggle: (isOpen: boolean) => void }> = ({ onTog
       href: "/admin/addWarranty",
       label: "Add Warranty",
       icon: (
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-5 h-5" fill="none" stroke="black" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
         </svg>
       ),
@@ -37,7 +37,7 @@ const AdminSidebar: React.FC<{ onToggle: (isOpen: boolean) => void }> = ({ onTog
       href: "/admin/Warranty",
       label: "Warranty",
       icon: (
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-5 h-5" fill="none" stroke="black" viewBox="0 0 24 24">
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -51,7 +51,7 @@ const AdminSidebar: React.FC<{ onToggle: (isOpen: boolean) => void }> = ({ onTog
       href: "/trashbin",
       label: "Trash Bin",
       icon: (
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-5 h-5" fill="none" stroke="black" viewBox="0 0 24 24">
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -67,14 +67,14 @@ const AdminSidebar: React.FC<{ onToggle: (isOpen: boolean) => void }> = ({ onTog
     <>
       {/* Sidebar */}
       <div
-        className={`fixed top-16 left-0 h-[calc(100vh-64px)] bg-gradient-to-b from-slate-900 hidden lg:block to-slate-800 transition-all duration-300 ease-in-out ${
+        className={`fixed top-0 left-0 h-[calc(100vh)] bg-gradient-to-b from-slate-100 hidden lg:block to-slate-100 transition-all duration-300 ease-in-out ${
           isOpen ? "w-80" : "w-16"
-        } overflow-hidden z-30 border-r border-slate-700/50 shadow-2xl`}
+        } overflow-hidden z-30 border-r border-slate-200/50 shadow-2xl`}
       >
         <div className="flex flex-col h-full">
           {/* Toggle Button */}
           <div className="flex items-center justify-end p-4">
-            <button onClick={toggleSidebar} className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 transition-all duration-200 hover:scale-105 shadow-md border border-slate-600/50">
+            <button onClick={toggleSidebar} className="p-2 rounded-lg bg-slate-100 hover:bg-slate-200 transition-all duration-200 hover:scale-105  border border-slate-300/50">
               <svg className={`w-5 h-5 text-slate-300 transition-transform duration-300 ${isOpen ? "rotate-0" : "rotate-180"}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
               </svg>
@@ -92,7 +92,7 @@ const AdminSidebar: React.FC<{ onToggle: (isOpen: boolean) => void }> = ({ onTog
                   </svg>
                 </div>
                 <div>
-                  <h2 className="text-white text-xl font-bold">Admin Panel</h2>
+                  <h2 className="text-black text-xl font-bold">Admin Panel</h2>
                   <p className="text-slate-400 text-sm">Management System</p>
                 </div>
               </div>
@@ -111,7 +111,7 @@ const AdminSidebar: React.FC<{ onToggle: (isOpen: boolean) => void }> = ({ onTog
                       } rounded-xl transition-all duration-200 hover:bg-slate-700/50 hover:transform hover:scale-105 cursor-pointer border border-transparent hover:border-slate-600/30 hover:shadow-lg`}
                     >
                       <div className="text-slate-300 group-hover:text-white transition-colors duration-200 flex-shrink-0">{item.icon}</div>
-                      {isOpen && <span className="ml-3 text-slate-300 group-hover:text-white font-medium transition-all duration-300 whitespace-nowrap">{item.label}</span>}
+                      {isOpen && <span className="ml-3 text-slate-500 group-hover:text-white font-medium transition-all duration-300 whitespace-nowrap">{item.label}</span>}
                     </div>
                   </Link>
                 </li>

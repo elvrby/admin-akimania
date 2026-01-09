@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { cookies } from "next/headers";
 
-import Header from "@/components/header"; // added
 import { SESSION_COOKIE_NAME } from "@/constants"; // added
 import "./globals.css";
 
@@ -24,7 +23,6 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Header session={session} />
         {children}
       </body>
     </html>
